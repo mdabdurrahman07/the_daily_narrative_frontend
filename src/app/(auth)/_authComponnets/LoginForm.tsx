@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,9 +11,21 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React from "react";
+import React, { useActionState, useEffect } from "react";
+import { loginAction } from "../_authActions/authAction";
+import { Loader } from "lucide-react";
+import { toast } from "sonner";
 
 const LoginForm = () => {
+  const [state, action, pending] = useActionState(loginAction, false);
+  useEffect(() => {
+    if (!state) return;
+    if (state.success) {
+      toast.success(state.message || "Login Successful");
+    } else {
+      toast.error(state.message || "Login Failed");
+    }
+  }, [state]);
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
@@ -25,12 +38,13 @@ const LoginForm = () => {
         </CardAction>
       </CardHeader>
       <CardContent>
-        <form>
+        <form action={action}>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
+                name="email"
                 type="email"
                 placeholder="m@example.com"
                 required
@@ -46,19 +60,20 @@ const LoginForm = () => {
                   Forgot your password?
                 </a>
               </div>
-              <Input id="password" type="password" required />
+              <Input id="password" name="password" type="password" required />
             </div>
           </div>
+
+          <CardFooter className="mt-6 flex-col gap-2 p-0">
+            <Button type="submit" className="w-full">
+              {pending ? <Loader className="animate-spin" /> : "Login"}
+            </Button>
+            <Button variant="outline" className="w-full">
+              Login with Google
+            </Button>
+          </CardFooter>
         </form>
       </CardContent>
-      <CardFooter className="flex-col gap-2">
-        <Button type="submit" className="w-full">
-          Login
-        </Button>
-        <Button variant="outline" className="w-full">
-          Login with Google
-        </Button>
-      </CardFooter>
     </Card>
   );
 };
