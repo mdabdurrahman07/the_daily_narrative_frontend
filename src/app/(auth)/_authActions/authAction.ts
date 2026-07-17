@@ -1,13 +1,7 @@
 "use server";
-type prevState = {
-  success: boolean;
-  statusCode: number;
-  message: string;
-  data: {
-    accessToken: string;
-    refreshToken: string;
-  };
-};
+
+import { prevState } from "../_types/type";
+
 export const loginAction = async (prevState: prevState, formData: FormData) => {
 
   const api = process.env.BACKEND_API_URL;
