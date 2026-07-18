@@ -40,6 +40,8 @@ import {
 import Image from "next/image";
 import logo from "../../../public/TDN.png";
 import { IUser } from "@/app/(public)/_types/types";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 /** The authenticated user payload consumed by the navbar. */
 type NavUser = IUser["data"];
@@ -151,9 +153,21 @@ export function Navbar({
   dashboardHref = "/dashboard",
   onLogout,
 }: NavbarProps) {
+  const router = useRouter();
   const pathname = usePathname();
   const isActive = useIsActive(pathname);
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleLogout = React.useCallback(async () => {
+    try {
+      await onLogout?.();
+      toast.success("User Logged Out Successfully");
+      router.push("/login");
+    } catch (error) {
+      console.error("Logout failed", error);
+      toast.error("Failed to log out");
+    }
+  }, [onLogout, router]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/60">
@@ -244,7 +258,7 @@ export function Navbar({
 
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem variant="destructive" onClick={onLogout}>
+                <DropdownMenuItem variant="destructive" onClick={handleLogout}>
                   <LogOut />
                   Log out
                 </DropdownMenuItem>
@@ -349,7 +363,7 @@ export function Navbar({
                         </Link>
                       </SheetClose>
                       <SheetClose
-                        onClick={onLogout}
+                        onClick={handleLogout}
                         className="flex items-center gap-2 rounded-md px-3 py-2 text-left text-sm font-medium text-destructive transition-colors hover:bg-destructive/10"
                       >
                         <LogOut className="size-4" />
