@@ -11,24 +11,25 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React, { useActionState, useEffect } from "react";
+import React, { useActionState} from "react";
 import { loginAction } from "../_authActions/authAction";
 import { Loader } from "lucide-react";
+import Link from "next/link";
 // import { toast } from "sonner";
 // import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const [state, action, pending] = useActionState(loginAction, false);
 //   const router = useRouter()
-  useEffect(() => {
-    // if (!state) return;
-    // if (state.success) {
-    //   toast.success(state.message || "Login Successful");
-    // //   router.push("/dashboard")
-    // } else {
-    //   toast.error(state.message || "Login Failed");
-    // }
-  }, [state]);
+  // useEffect(() => {
+  //   // if (!state) return;
+  //   // if (state.success) {
+  //   //   toast.success(state.message || "Login Successful");
+  //   // //   router.push("/dashboard")
+  //   // } else {
+  //   //   toast.error(state.message || "Login Failed");
+  //   // }
+  // }, [state]);
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
@@ -37,7 +38,9 @@ const LoginForm = () => {
           Enter your email below to login to your account
         </CardDescription>
         <CardAction>
+          <Link href="/register">
           <Button variant="link">Sign Up</Button>
+          </Link>
         </CardAction>
       </CardHeader>
       <CardContent>
