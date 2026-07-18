@@ -61,7 +61,7 @@ export interface NavbarProps {
   /** Href for the dashboard link. */
   dashboardHref?: string;
   /** Called when the user selects "Log out". */
-  onLogout?: () => void;
+  onLogout?: () => void | Promise<void>;
 }
 
 const DEFAULT_LINKS: NavLink[] = [

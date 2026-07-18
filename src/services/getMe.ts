@@ -1,3 +1,4 @@
+"use server"
 import { cookies } from "next/headers";
 import { IUser } from "@/app/(public)/_types/types";
 
@@ -22,7 +23,12 @@ export const getMe = async (): Promise<GetMeResult> => {
     // Authorization: accessToken as unknown as string
     // Authorization: `${accessToken}`
     // Authorization: `Bearer ${accessToken}`
-    headers: { Cookie: `accessToken=${accessToken}` },
+    headers: { Cookie: `accessToken=${accessToken}`},
+    cache: "force-cache",
+    next:{
+      revalidate: 60 * 60 * 24, //1day
+      tags: ["myProfile"]
+    }
   });
 
   const result = await response.json();

@@ -1,6 +1,6 @@
-// src/app/(public)/layout.tsx
 import Navbar from "@/components/shared/Navbar";
 import { getMe } from "@/services/getMe";
+import { logout } from "@/services/logout";
 
 export default async function PublicLayout({
   children,
@@ -10,7 +10,7 @@ export default async function PublicLayout({
 
   return (
     <div>
-      <Navbar user={user} />
+      <Navbar user={user} onLogout={logout} />
       {children}
     </div>
   );
