@@ -1,3 +1,4 @@
+"use server"
 import Jwt from "jsonwebtoken";
 
 const verifyToken = (token: string, secret: string) => {

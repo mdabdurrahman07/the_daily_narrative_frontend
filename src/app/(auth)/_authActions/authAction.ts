@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 export const loginAction = async (prevState: prevState, formData: FormData) => {
-  const api = process.env.BACKEND_API_URL;
+  const url = process.env.BACKEND_API_URL;
   const email = formData.get("email");
   const password = formData.get("password");
 
@@ -15,7 +15,7 @@ export const loginAction = async (prevState: prevState, formData: FormData) => {
     password,
   };
 
-  const response = await fetch(`${api}/api/v1/tdn/auth/users/login`, {
+  const response = await fetch(`${url}/api/v1/tdn/auth/users/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -56,7 +56,7 @@ export const registerAction = async (
   prevState: prevUserRegData,
   formData: FormData,
 ) => {
-  const api = process.env.BACKEND_API_URL;
+  const url = process.env.BACKEND_API_URL;
   const name = formData.get("name");
   const email = formData.get("email");
   const password = formData.get("password");
@@ -69,7 +69,7 @@ export const registerAction = async (
     profilePhoto,
   };
 
-  const response = await fetch(`${api}/api/v1/tdn/auth/users/register`, {
+  const response = await fetch(`${url}/api/v1/tdn/auth/users/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
