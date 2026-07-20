@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { prevState, prevUserRegData } from "../_types/type";
 import { redirect } from "next/navigation";
-import { toast } from "sonner";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 export const loginAction = async (prevState: prevState, formData: FormData) => {
   const api = process.env.BACKEND_API_URL;
@@ -37,7 +37,16 @@ export const loginAction = async (prevState: prevState, formData: FormData) => {
       maxAge: 60 * 60 * 24 * 7, // 1day
       sameSite: "lax",
     });
-    redirect("/dashboard", "replace");
+
+    const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
+
+    if (decodedToken.role === "USER") {
+      redirect("/dashboard", "replace");
+    } else if (decodedToken.role === "ADMIN") {
+      redirect("/admin-dashboard", "replace");
+    } else if (decodedToken.role === "AUTHOR") {
+      redirect("/author-dashboard", "replace");
+    }
   }
 
   return result;
