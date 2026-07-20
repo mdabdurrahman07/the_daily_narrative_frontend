@@ -27,7 +27,7 @@ const RegisterForm = () => {
         </CardDescription>
         <CardAction>
           <Link href="/login">
-            <Button variant="link">Login</Button>
+            <Button variant="link">Sign In</Button>
           </Link>
         </CardAction>
       </CardHeader>
