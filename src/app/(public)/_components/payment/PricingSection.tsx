@@ -1,15 +1,19 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckIcon } from "lucide-react";
-import { getSubscriptionStatus } from "../../_actions/getSubscriptionStatus";
+// import { getSubscriptionStatus } from "../../_actions/getSubscriptionStatus";
 import { SubscribeButton } from "./SubscribeButton";
+import { getSubscriptionStatus } from "../../_publicActions/getSubscriptionStatus";
 
 export async function PricingSection() {
+ 
   const statusResult = await getSubscriptionStatus()
 
   const isActive = Boolean(
     statusResult?.success && statusResult.data?.isSubscribed,
   );
+
+
 
   return (
     <Card className="mx-auto max-w-md">
@@ -39,8 +43,7 @@ export async function PricingSection() {
             Support independent journalism
           </li>
         </ul>
-        {!isActive && <SubscribeButton />}
-        {/* {<SubscribeButton />} */}
+        {!isActive && <SubscribeButton/>}
       </CardContent>
     </Card>
   );

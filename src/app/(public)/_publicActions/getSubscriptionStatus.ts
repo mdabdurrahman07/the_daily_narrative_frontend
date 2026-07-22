@@ -1,7 +1,7 @@
 "use server"
 import { cookies } from "next/headers";
 
-export const getPremiumNews = async () => {
+export const getSubscriptionStatus = async () => {
   const url = process.env.BACKEND_API_URL;
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
@@ -13,16 +13,11 @@ export const getPremiumNews = async () => {
       message: "User not logged in",
     };
   }
-  const response = await fetch(`${url}/api/v1/tdn/premium`, {
+  const response = await fetch(`${url}/api/v1/tdn/subscription/s`, {
     // Authorization: accessToken as unknown as string
     // Authorization: `${accessToken}`
     // Authorization: `Bearer ${accessToken}`
     headers: { Cookie: `accessToken=${accessToken}` },
-    cache: "force-cache",
-    next: {
-      revalidate: 60 * 60 * 6, //6 hours,
-      tags: ["premium-posts"],
-    },
   });
 
   const result = await response.json();
