@@ -179,6 +179,7 @@ export function Navbar({
             className="text-lg font-semibold text-foreground transition-opacity hover:opacity-80"
           >
             <Image
+              unoptimized
               src={logo}
               alt="TDN - The Daily Narrative - Blogging platform for everyone"
               width={50}

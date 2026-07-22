@@ -1,3 +1,4 @@
+import { getPremiumNews } from "../../_publicActions/getPremiumNews";
 import { IPost } from "../../_types/types";
 import { NewsCard } from "./NewsCard";
 
@@ -7,7 +8,7 @@ import { NewsCard } from "./NewsCard";
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const query = await searchParams;
-  const result = {success: true, data: []}  //await getPremiumNews({ query });
+  const result = await getPremiumNews();
 
   if (!result.success || !result.data?.length) {
     return (
